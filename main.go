@@ -59,7 +59,7 @@ func main() {
 	}
 
 	log.Printf("Starting the server on port %s\n", port)
-	log.Fatal(http.ListenAndServe("localhost:"+port, router))
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
 
 // POST /maps/ (with JSON name: string, routes_to: map[string]weight optional) : CREATE a location, optionally with routes
