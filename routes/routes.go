@@ -243,7 +243,12 @@ func (rs *RouteStore) DeleteLocation(name string) error {
 	if _, err := rs.redis.Do("SREM", locations_set, name); err != nil {
 		return err
 	}
-	for _, loc := range rs.GetLocations() {
+
+	locations, locErr := redis.Strings(rs.redis.Do("SMEMBERS", locations_set))
+	if locErr != nil {
+		return locErr
+	}
+	for _, loc := range locations {
 		if _, err := rs.redis.Do("HDEL", loc, name); err != nil {
 			return err
 		}
